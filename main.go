@@ -6,22 +6,22 @@ import (
 	"os"
 )
 
-func main() {
+func WorkPart() {
 	internalDirName := "internal/"
-	MakingDirProcedure(internalDirName)
+	makingDirProcedure(internalDirName)
 
 	for _, v := range dirNames {
-		MakingDirProcedure(v)
+		makingDirProcedure(v)
 	}
 
 	for _, v := range fileNames {
-		CreateFileInTheFolderOfTheSameName(v)
+		createFileInTheFolderOfTheSameName(v)
 	}
 
 	fmt.Println("Full directory structure was generated")
 }
 
-func MakingDirProcedure(dirName string) {
+func makingDirProcedure(dirName string) {
 	err := os.Mkdir(dirName, 0750)
 	if err != nil {
 		if os.IsExist(err) {
@@ -36,7 +36,7 @@ func MakingDirProcedure(dirName string) {
 	log.Println("Successfully created'" + dirName + "' directory")
 }
 
-func CreateFileInTheFolderOfTheSameName(nameOfFile string) {
+func createFileInTheFolderOfTheSameName(nameOfFile string) {
 	_, err := os.Create(nameOfFile)
 	if err != nil {
 		fmt.Println("Error:", err)

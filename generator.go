@@ -10,6 +10,9 @@ import (
 const nameOfConfigPackage = "config"
 const nameOfLoggerPackage = "logger"
 
+var nondefaultDirNames = [][]string{configDirNames, loggerDirNames}
+var nondefaultFileNames = [][]string{configFileNames, loggerFileNames}
+
 func WorkPart() {
 	fmt.Println("Structure directory generator...")
 
@@ -21,7 +24,7 @@ func WorkPart() {
 		filesGen.CreateFileInTheFolderOfTheSameName(v)
 	}
 
-	for _, v := range []string{nameOfConfigPackage, nameOfLoggerPackage} {
+	for i, v := range []string{nameOfConfigPackage, nameOfLoggerPackage} {
 		isNeeds, err := packagesgen.GenPackageByName(v)
 		if err != nil {
 			fmt.Println("Package " + v + " will not created")
@@ -29,9 +32,14 @@ func WorkPart() {
 			fmt.Println("Package " + v + " will not created")
 		} else {
 			fmt.Println("Package " + v + " will created")
-			// TODO: дописать создание
-			//...
-			//...
+
+			for _, value := range nondefaultDirNames[i] {
+				filesGen.MakingDirProcedure(value)
+			}
+
+			for _, value := range nondefaultFileNames[i] {
+				filesGen.CreateFileInTheFolderOfTheSameName(value)
+			}
 		}
 	}
 
@@ -46,15 +54,6 @@ var defaultDirNames = []string{
 	"internal/config/",
 	"internal/models/",
 	"internal/services/",
-
-	// "config/",
-
-	// "internal/lib",
-	// "internal/lib/logger",
-	// "internal/lib/logger/handler",
-	// "internal/lib/logger/handler/slogdiscard",
-	// "internal/lib/logger/handler/slogpretty",
-	// "internal/lib/logger/sl",
 }
 
 var defaultFileNames = []string{
@@ -63,10 +62,27 @@ var defaultFileNames = []string{
 	"internal/config/config.go",
 	"internal/models/models.go",
 	"internal/services/services.go",
+}
 
-	// "config/local.yaml",
+var configDirNames = []string{
+	"config/",
+}
 
-	// "internal/lib/logger/handler/slogdiscard/slogdiscard.go",
-	// "internal/lib/logger/handler/slogpretty/slogpretty.go",
-	// "internal/lib/logger/sl/sl.go",
+var configFileNames = []string{
+	"config/local.yaml",
+}
+
+var loggerDirNames = []string{
+	"internal/lib",
+	"internal/lib/logger",
+	"internal/lib/logger/handler",
+	"internal/lib/logger/handler/slogdiscard",
+	"internal/lib/logger/handler/slogpretty",
+	"internal/lib/logger/sl",
+}
+
+var loggerFileNames = []string{
+	"internal/lib/logger/handler/slogdiscard/slogdiscard.go",
+	"internal/lib/logger/handler/slogpretty/slogpretty.go",
+	"internal/lib/logger/sl/sl.go",
 }

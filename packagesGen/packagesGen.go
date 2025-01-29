@@ -1,11 +1,14 @@
 package packagesgen
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+)
 
 func GenPackageByName(packageName string) (bool, error) {
 	var isPackageNeeds string = "yes"
 
-	fmt.Println("Do you need " + packageName + "?(default: yes) yes/no")
+	log.Println("Do you need " + packageName + "?(default: yes) yes/no")
 
 	i, err := fmt.Scan(&isPackageNeeds)
 	if err != nil {
@@ -13,6 +16,8 @@ func GenPackageByName(packageName string) (bool, error) {
 	} else if i != 1 {
 		return false, fmt.Errorf("error scanning")
 	}
+
+	log.Println("isPackageNeeds:", isPackageNeeds)
 
 	if isPackageNeeds == "yes" {
 		return true, nil

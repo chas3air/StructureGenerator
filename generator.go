@@ -3,86 +3,36 @@ package generator
 import (
 	"fmt"
 
-	"github.com/chas3air/StructureGenerator/services/filesGen"
-	packagesgen "github.com/chas3air/StructureGenerator/services/packagesGen"
+	packagesgen "github.com/chas3air/StructureGenerator/packagesGen"
+	basementgen "github.com/chas3air/StructureGenerator/packagesGen/basementGen"
+	configgen "github.com/chas3air/StructureGenerator/packagesGen/configGen"
+	loggergen "github.com/chas3air/StructureGenerator/packagesGen/loggerGen"
 )
 
 const nameOfConfigPackage = "config"
 const nameOfLoggerPackage = "logger"
 
-var nondefaultDirNames = [][]string{configDirNames, loggerDirNames}
-var nondefaultFileNames = [][]string{configFileNames, loggerFileNames}
-
 func WorkPart() {
 	fmt.Println("Structure directory generator...")
+	var genFactory packagesgen.CommonGenFactory = basementgen.NewBasementDataGenerator(nil, nil)
 
-	for _, v := range defaultDirNames {
-		filesGen.MakingDirProcedure(v)
+	fmt.Println("Generate default dirs and files")
+	genFactory.GenerateDirectory()
+	genFactory.GenerateFiles()
+
+	fmt.Println("At this point you need to choose whether you need modules or not")
+
+	if isNeed, err := packagesgen.GenPackageByName(nameOfConfigPackage); isNeed && err != nil {
+		genFactory = configgen.NewConfigDataGenerator(nil, nil)
+		genFactory.GenerateDirectory()
+		genFactory.GenerateFiles()
 	}
 
-	for _, v := range defaultFileNames {
-		filesGen.CreateFileInTheFolderOfTheSameName(v)
-	}
-
-	for i, v := range []string{nameOfConfigPackage, nameOfLoggerPackage} {
-		isNeeds, err := packagesgen.GenPackageByName(v)
-		if err != nil {
-			fmt.Println("Package " + v + " will not created")
-		} else if !isNeeds {
-			fmt.Println("Package " + v + " will not created")
-		} else {
-			fmt.Println("Package " + v + " will created")
-
-			for _, value := range nondefaultDirNames[i] {
-				filesGen.MakingDirProcedure(value)
-			}
-
-			for _, value := range nondefaultFileNames[i] {
-				filesGen.CreateFileInTheFolderOfTheSameName(value)
-			}
-		}
+	if isNeed, err := packagesgen.GenPackageByName(nameOfLoggerPackage); isNeed && err != nil {
+		genFactory = loggergen.NewLoggerDataGenerator(nil, nil)
+		genFactory.GenerateDirectory()
+		genFactory.GenerateFiles()
 	}
 
 	fmt.Println("Full directory structure was generated")
-}
-
-var defaultDirNames = []string{
-	"cmd/",
-	"cmd/app/",
-	"internal/",
-	"internal/app/",
-	"internal/config/",
-	"internal/models/",
-	"internal/services/",
-}
-
-var defaultFileNames = []string{
-	"cmd/app/main.go",
-	"internal/app/app.go",
-	"internal/config/config.go",
-	"internal/models/models.go",
-	"internal/services/services.go",
-}
-
-var configDirNames = []string{
-	"config/",
-}
-
-var configFileNames = []string{
-	"config/local.yaml",
-}
-
-var loggerDirNames = []string{
-	"internal/lib",
-	"internal/lib/logger",
-	"internal/lib/logger/handler",
-	"internal/lib/logger/handler/slogdiscard",
-	"internal/lib/logger/handler/slogpretty",
-	"internal/lib/logger/sl",
-}
-
-var loggerFileNames = []string{
-	"internal/lib/logger/handler/slogdiscard/slogdiscard.go",
-	"internal/lib/logger/handler/slogpretty/slogpretty.go",
-	"internal/lib/logger/sl/sl.go",
 }

@@ -21,12 +21,12 @@ func MakingDirProcedure(dirName string) {
 	log.Println("Successfully created '" + dirName + "' directory")
 }
 
-func CreateFileInTheFolderOfTheSameName(nameOfFile string) {
-	_, err := os.Create(nameOfFile)
-	if err != nil {
-		fmt.Println("Error:", err)
-		return
-	}
+// func CreateFileInTheFolderOfTheSameName(nameOfFile string) {
+// 	_, err := os.Create(nameOfFile)
+// 	if err != nil {
+// 		fmt.Println("Error:", err)
+// 		return
+// 	}
 
-	log.Println("Successfully created '" + nameOfFile + "' file")
-}
+// 	log.Println("Successfully created '" + nameOfFile + "' file")
+// }

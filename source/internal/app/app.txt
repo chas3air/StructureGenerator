@@ -1,0 +1,10 @@
+package app
+
+import (
+	"net/http"
+)
+
+func Run() {
+	http.HandleFunc("/", http.NotFound)
+	http.ListenAndServe(":8080", nil)
+}

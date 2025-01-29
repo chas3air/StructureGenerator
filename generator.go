@@ -25,14 +25,14 @@ func WorkPart() {
 
 	if isNeed, err := packagesgen.GenPackageByName(nameOfConfigPackage); isNeed && err != nil {
 		genFactory = configgen.NewConfigDataGenerator(nil, nil)
-		log.Println(genFactory)
+		log.Println("config factory with parameters", genFactory)
 		genFactory.GenerateDirectory()
 		genFactory.GenerateFiles()
 	}
 
 	if isNeed, err := packagesgen.GenPackageByName(nameOfLoggerPackage); isNeed && err != nil {
 		genFactory = loggergen.NewLoggerDataGenerator(nil, nil)
-		log.Println(genFactory)
+		log.Println("logger factory with parameters", genFactory)
 		genFactory.GenerateDirectory()
 		genFactory.GenerateFiles()
 	}

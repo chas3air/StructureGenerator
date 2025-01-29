@@ -2,7 +2,7 @@ package basementgen
 
 import (
 	packagesgen "github.com/chas3air/StructureGenerator/packagesGen"
-	"github.com/chas3air/StructureGenerator/services/objectgen"
+	objectgen "github.com/chas3air/StructureGenerator/services/objectGen"
 )
 
 var basementDirsNamesDefautl = []string{

@@ -23,7 +23,7 @@ func WorkPart() {
 	log.Println("Generate default dirs and files")
 	genFactory.GenerateDirectory()
 	genFactory.GenerateFiles()
-	
+
 	dirFiller.Fill(
 		dirfiller.CreateMapFromDestAndSource(
 			genFactory.GetDirsNames(),

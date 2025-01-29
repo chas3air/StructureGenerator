@@ -23,14 +23,14 @@ func WorkPart() {
 
 	fmt.Println("At this point you need to choose whether you need modules or not")
 
-	if isNeed, err := packagesgen.GenPackageByName(nameOfConfigPackage); isNeed && err != nil {
+	if isNeed, err := packagesgen.GenPackageByName(nameOfConfigPackage); isNeed && err == nil {
 		genFactory = configgen.NewConfigDataGenerator(nil, nil)
 		log.Println("config factory with parameters", genFactory)
 		genFactory.GenerateDirectory()
 		genFactory.GenerateFiles()
 	}
 
-	if isNeed, err := packagesgen.GenPackageByName(nameOfLoggerPackage); isNeed && err != nil {
+	if isNeed, err := packagesgen.GenPackageByName(nameOfLoggerPackage); isNeed && err == nil {
 		genFactory = loggergen.NewLoggerDataGenerator(nil, nil)
 		log.Println("logger factory with parameters", genFactory)
 		genFactory.GenerateDirectory()

@@ -9,6 +9,7 @@ import (
 	configgen "github.com/chas3air/StructureGenerator/packagesGen/configGen"
 	loggergen "github.com/chas3air/StructureGenerator/packagesGen/loggerGen"
 	dirfiller "github.com/chas3air/StructureGenerator/services/dirsFiller"
+	"github.com/chas3air/StructureGenerator/source"
 )
 
 const nameOfConfigPackage = "config"
@@ -22,7 +23,17 @@ func WorkPart() {
 	log.Println("Generate default dirs and files")
 	genFactory.GenerateDirectory()
 	genFactory.GenerateFiles()
-	dirFiller.Fill(dirfiller.CreateMapFromDestAndSource(genFactory.GetDirsNames(), basementgen.SourceBasementDirsNames))
+	
+	dirFiller.Fill(
+		dirfiller.CreateMapFromDestAndSource(
+			genFactory.GetDirsNames(),
+			[]string{
+				source.SourceAppMain,
+				source.SourceInternalApp,
+				source.SourceInternalConfig,
+			},
+		),
+	)
 
 	fmt.Println("At this point you need to choose whether you need modules or not")
 

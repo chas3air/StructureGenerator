@@ -3,7 +3,6 @@ package dirsfiller
 import (
 	"log"
 	"os"
-	"path/filepath"
 )
 
 type DirFiller struct {
@@ -14,26 +13,16 @@ type DirFiller struct {
 // Значение это место где лежит то что нужно копировать
 func (df *DirFiller) Fill(fileSources map[string]string) error {
 	for dest, source := range fileSources {
-		if source == "" {
-			log.Println("Error source")
-			continue
-		}
-
-		sourceText, err := os.ReadFile(source)
+		file, err := os.OpenFile(dest, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
 		if err != nil {
-			log.Println("Error of reading:", source, ", error:", err.Error())
+			log.Printf("Error opening file %s: %v", dest, err)
 			continue
 		}
 
-		dir := filepath.Dir(dest)
-		if err := os.MkdirAll(dir, os.ModePerm); err != nil {
-			log.Println("Error creating directory:", dir, ", error:", err.Error())
-			continue
-		}
+		defer file.Close()
 
-		err = os.WriteFile(dest, sourceText, 0644)
-		if err != nil {
-			log.Println("Error of filling:", dest, ", error:", err.Error())
+		if _, err := file.WriteString(source); err != nil {
+			log.Printf("Error writing to file %s: %v", dest, err)
 		}
 	}
 

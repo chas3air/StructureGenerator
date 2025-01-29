@@ -1,3 +1,90 @@
+package source
+
+var SourceAppMain = `
+package main
+
+func main() {
+	app.Run()
+}
+`
+
+var SourceConfig = `
+env: "local"
+port: 8080
+timeout: 1h
+`
+
+var SourceInternalApp = `
+package app
+
+import (
+	"net/http"
+)
+
+func Run() {
+	http.HandleFunc("/", http.NotFound)
+	http.ListenAndServe(":8080", nil)
+}
+`
+
+var SourceInternalConfig = `
+package config
+
+import (
+	"flag"
+	"os"
+	"time"
+
+	"github.com/ilyakaznacheev/cleanenv"
+)
+
+type Config struct {
+	Env     string        ` + `yaml:"env" env-default:"local"` + `
+	Port    int           ` + `yaml:"port"` + `
+	Timeout time.Duration ` + `yaml:"timeout"` + `
+}
+
+func MustLoad() *Config {
+	configPath := fetchConfigPath()
+	if configPath == "" {
+		panic("config path is empty")
+	}
+
+	if err := validateConfigFile(configPath); err != nil {
+		panic(err)
+	}
+
+	var cfg Config
+	if err := cleanenv.ReadConfig(configPath, &cfg); err != nil {
+		panic("failed to read config: " + err.Error())
+	}
+
+	return &cfg
+}
+
+func fetchConfigPath() string {
+	var res string
+
+	// --config=./config/local.yaml
+	flag.StringVar(&res, "config", "", "path to config file")
+	flag.Parse()
+
+	if res == "" {
+		res = os.Getenv("CONFIG_PATH")
+	}
+
+	return res
+}
+
+func validateConfigFile(path string) error {
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		return fmt.Errorf("config file doesn't exist: %s", path)
+	}
+	return nil
+}
+`
+
+var SourceLibLoggerHandlerSlogpretty = `
 package slogpretty
 
 import (
@@ -96,3 +183,19 @@ func (h *PrettyHandler) WithGroup(name string) slog.Handler {
 		l:       h.l,
 	}
 }
+`
+
+var SourceLibLoggerSl = `
+package sl
+
+import (
+	"log/slog"
+)
+
+func Err(err error) slog.Attr {
+	return slog.Attr{
+		Key:   "error",
+		Value: slog.StringValue(err.Error()),
+	}
+}
+`

@@ -19,16 +19,6 @@ var basementFilesNamesDefautl = []string{
 	"cmd/app/main.go",
 	"internal/app/app.go",
 	"internal/config/config.go",
-	"internal/models/models.go",
-	"internal/services/services.go",
-}
-
-var SourceBasementDirsNames = []string{
-	"source/cmd/app/main.txt",
-	"source/internal/app/app.txt",
-	"source/internal/config/config.txt",
-	"source/internal/models/models.txt",
-	"source/internal/services/services.txt",
 }
 
 type BasementDataGenerator struct {

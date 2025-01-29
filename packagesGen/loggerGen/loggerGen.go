@@ -2,7 +2,7 @@ package loggergen
 
 import (
 	packagesgen "github.com/chas3air/StructureGenerator/packagesGen"
-	"github.com/chas3air/StructureGenerator/services/filesGen"
+	objectgen "github.com/chas3air/StructureGenerator/services/objectgen"
 )
 
 var loggerDirsNamesDefault = []string{
@@ -19,20 +19,27 @@ var loggerFilesNamesDefault = []string{
 }
 
 type LoggerDataGenerator struct {
-	ConfigDirsNamesDefault  []string
-	ConfigFilesNamesDefault []string
+	ConfigDirsNames  []string
+	ConfigFilesNames []string
 }
 
 func (ldg *LoggerDataGenerator) GenerateDirectory() {
-	for _, v := range ldg.ConfigDirsNamesDefault {
-		filesGen.MakingDirProcedure(v)
+	for _, v := range ldg.ConfigDirsNames {
+		objectgen.MakingDirProcedure(v)
 	}
 }
 
 func (ldg *LoggerDataGenerator) GenerateFiles() {
-	for _, v := range ldg.ConfigFilesNamesDefault {
-		filesGen.MakingFileProcedure(v)
+	for _, v := range ldg.ConfigFilesNames {
+		objectgen.MakingFileProcedure(v)
 	}
+}
+
+func (ldg *LoggerDataGenerator) GetDirsNames() []string {
+	return ldg.ConfigDirsNames
+}
+func (ldg *LoggerDataGenerator) GetFilesNames() []string {
+	return ldg.ConfigFilesNames
 }
 
 func NewLoggerDataGenerator(dirsNames, filesNames []string) packagesgen.CommonGenFactory {
@@ -46,7 +53,7 @@ func NewLoggerDataGenerator(dirsNames, filesNames []string) packagesgen.CommonGe
 	}
 
 	return &LoggerDataGenerator{
-		ConfigDirsNamesDefault:  dirsNames,
-		ConfigFilesNamesDefault: filesNames,
+		ConfigDirsNames:  dirsNames,
+		ConfigFilesNames: filesNames,
 	}
 }

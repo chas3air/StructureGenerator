@@ -11,4 +11,7 @@ type GenFilesFactory interface {
 type CommonGenFactory interface {
 	GenerateDirectory()
 	GenerateFiles()
+
+	GetDirsNames() []string
+	GetFilesNames() []string
 }

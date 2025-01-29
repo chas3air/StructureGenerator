@@ -17,8 +17,6 @@ func GenPackageByName(packageName string) (bool, error) {
 		return false, fmt.Errorf("error scanning")
 	}
 
-	log.Println("isPackageNeeds:", isPackageNeeds)
-
 	if isPackageNeeds == "yes" {
 		return true, nil
 	} else {

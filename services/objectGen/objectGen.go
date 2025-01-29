@@ -1,4 +1,4 @@
-package filesGen
+package objectgen
 
 import (
 	"fmt"

@@ -2,7 +2,7 @@ package configgen
 
 import (
 	packagesgen "github.com/chas3air/StructureGenerator/packagesGen"
-	"github.com/chas3air/StructureGenerator/services/filesGen"
+	"github.com/chas3air/StructureGenerator/services/objectgen"
 )
 
 var configDirNamesDefault = []string{
@@ -14,20 +14,27 @@ var configFilesNamesDefault = []string{
 }
 
 type ConfigDataGenerator struct {
-	ConfigDirNamesDefault   []string
-	ConfigFilesNamesDefault []string
+	ConfigDirsNames  []string
+	ConfigFilesNames []string
 }
 
 func (cdg *ConfigDataGenerator) GenerateDirectory() {
-	for _, v := range cdg.ConfigDirNamesDefault {
-		filesGen.MakingDirProcedure(v)
+	for _, v := range cdg.ConfigDirsNames {
+		objectgen.MakingDirProcedure(v)
 	}
 }
 
 func (cdg *ConfigDataGenerator) GenerateFiles() {
-	for _, v := range cdg.ConfigFilesNamesDefault {
-		filesGen.MakingFileProcedure(v)
+	for _, v := range cdg.ConfigFilesNames {
+		objectgen.MakingFileProcedure(v)
 	}
+}
+
+func (cdg *ConfigDataGenerator) GetDirsNames() []string {
+	return cdg.ConfigDirsNames
+}
+func (cdg *ConfigDataGenerator) GetFilesNames() []string {
+	return cdg.ConfigFilesNames
 }
 
 func NewConfigDataGenerator(dirsNames, filesNames []string) packagesgen.CommonGenFactory {
@@ -41,7 +48,7 @@ func NewConfigDataGenerator(dirsNames, filesNames []string) packagesgen.CommonGe
 	}
 
 	return &ConfigDataGenerator{
-		ConfigDirNamesDefault:   dirsNames,
-		ConfigFilesNamesDefault: filesNames,
+		ConfigDirsNames:  dirsNames,
+		ConfigFilesNames: filesNames,
 	}
 }

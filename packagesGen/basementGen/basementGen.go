@@ -2,7 +2,7 @@ package basementgen
 
 import (
 	packagesgen "github.com/chas3air/StructureGenerator/packagesGen"
-	"github.com/chas3air/StructureGenerator/services/filesGen"
+	"github.com/chas3air/StructureGenerator/services/objectgen"
 )
 
 var basementDirsNamesDefautl = []string{
@@ -23,21 +23,36 @@ var basementFilesNamesDefautl = []string{
 	"internal/services/services.go",
 }
 
+var SourceBasementDirsNames = []string{
+	"source/cmd/app/main.txt",
+	"source/internal/app/app.txt",
+	"source/internal/config/config.txt",
+	"source/internal/models/models.txt",
+	"source/internal/services/services.txt",
+}
+
 type BasementDataGenerator struct {
-	ConfigDirNamesDefault   []string
-	ConfigFilesNamesDefault []string
+	ConfigDirNames   []string
+	ConfigFilesNames []string
 }
 
 func (bdg *BasementDataGenerator) GenerateDirectory() {
-	for _, v := range bdg.ConfigDirNamesDefault {
-		filesGen.MakingDirProcedure(v)
+	for _, v := range bdg.ConfigDirNames {
+		objectgen.MakingDirProcedure(v)
 	}
 }
 
 func (bdg *BasementDataGenerator) GenerateFiles() {
-	for _, v := range bdg.ConfigFilesNamesDefault {
-		filesGen.MakingFileProcedure(v)
+	for _, v := range bdg.ConfigFilesNames {
+		objectgen.MakingFileProcedure(v)
 	}
+}
+
+func (bdg *BasementDataGenerator) GetDirsNames() []string {
+	return bdg.ConfigDirNames
+}
+func (bdg *BasementDataGenerator) GetFilesNames() []string {
+	return bdg.ConfigFilesNames
 }
 
 func NewBasementDataGenerator(dirsNames, filesNames []string) packagesgen.CommonGenFactory {
@@ -51,7 +66,7 @@ func NewBasementDataGenerator(dirsNames, filesNames []string) packagesgen.Common
 	}
 
 	return &BasementDataGenerator{
-		ConfigDirNamesDefault:   dirsNames,
-		ConfigFilesNamesDefault: filesNames,
+		ConfigDirNames:   dirsNames,
+		ConfigFilesNames: filesNames,
 	}
 }

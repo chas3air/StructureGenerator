@@ -26,7 +26,7 @@ func (cdg *ConfigDataGenerator) GenerateDirectory() {
 
 func (cdg *ConfigDataGenerator) GenerateFiles() {
 	for _, v := range cdg.ConfigFilesNamesDefault {
-		filesGen.MakingDirProcedure(v)
+		filesGen.MakingFileProcedure(v)
 	}
 }
 

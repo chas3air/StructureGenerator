@@ -36,7 +36,7 @@ func (bdg *BasementDataGenerator) GenerateDirectory() {
 
 func (bdg *BasementDataGenerator) GenerateFiles() {
 	for _, v := range bdg.ConfigFilesNamesDefault {
-		filesGen.MakingDirProcedure(v)
+		filesGen.MakingFileProcedure(v)
 	}
 }
 

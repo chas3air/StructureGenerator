@@ -6,11 +6,11 @@ import (
 )
 
 var loggerDirsNamesDefault = []string{
-	"internal/lib",
-	"internal/lib/logger",
-	"internal/lib/logger/handler",
-	"internal/lib/logger/handler/slogdiscard",
-	"internal/lib/logger/sl",
+	"internal/lib/",
+	"internal/lib/logger/",
+	"internal/lib/logger/handler/",
+	"internal/lib/logger/handler/slogdiscard/",
+	"internal/lib/logger/sl/",
 }
 
 var loggerFilesNamesDefault = []string{
@@ -31,7 +31,7 @@ func (ldg *LoggerDataGenerator) GenerateDirectory() {
 
 func (ldg *LoggerDataGenerator) GenerateFiles() {
 	for _, v := range ldg.ConfigFilesNamesDefault {
-		filesGen.MakingDirProcedure(v)
+		filesGen.MakingFileProcedure(v)
 	}
 }
 

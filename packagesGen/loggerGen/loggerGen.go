@@ -2,7 +2,7 @@ package loggergen
 
 import (
 	packagesgen "github.com/chas3air/StructureGenerator/packagesGen"
-	objectgen "github.com/chas3air/StructureGenerator/services/objectgen"
+	objectgen "github.com/chas3air/StructureGenerator/services/objectGen"
 )
 
 var loggerDirsNamesDefault = []string{

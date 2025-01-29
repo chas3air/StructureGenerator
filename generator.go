@@ -24,16 +24,18 @@ func WorkPart() {
 	genFactory.GenerateDirectory()
 	genFactory.GenerateFiles()
 
-	dirFiller.Fill(
+	if err := dirFiller.Fill(
 		dirfiller.CreateMapFromDestAndSource(
-			genFactory.GetDirsNames(),
+			genFactory.GetFilesNames(),
 			[]string{
 				source.SourceAppMain,
 				source.SourceInternalApp,
 				source.SourceInternalConfig,
 			},
 		),
-	)
+	); err != nil {
+		log.Panicln(err)
+	}
 
 	fmt.Println("At this point you need to choose whether you need modules or not")
 

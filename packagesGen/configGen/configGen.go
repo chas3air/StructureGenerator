@@ -32,11 +32,11 @@ func (cdg *ConfigDataGenerator) GenerateFiles() {
 
 func NewConfigDataGenerator(dirsNames, filesNames []string) packagesgen.CommonGenFactory {
 	if dirsNames == nil {
-		dirsNames = make([]string, 0, len(configDirNamesDefault))
+		dirsNames = make([]string, len(configDirNamesDefault))
 		copy(dirsNames, configDirNamesDefault)
 	}
 	if filesNames == nil {
-		filesNames = make([]string, 0, len(configFilesNamesDefault))
+		filesNames = make([]string, len(configFilesNamesDefault))
 		copy(filesNames, configFilesNamesDefault)
 	}
 

@@ -42,11 +42,11 @@ func (bdg *BasementDataGenerator) GenerateFiles() {
 
 func NewBasementDataGenerator(dirsNames, filesNames []string) packagesgen.CommonGenFactory {
 	if dirsNames == nil {
-		dirsNames = make([]string, 0, len(basementDirsNamesDefautl))
+		dirsNames = make([]string, len(basementDirsNamesDefautl))
 		copy(dirsNames, basementDirsNamesDefautl)
 	}
 	if filesNames == nil {
-		filesNames = make([]string, 0, len(basementFilesNamesDefautl))
+		filesNames = make([]string, len(basementFilesNamesDefautl))
 		copy(filesNames, basementFilesNamesDefautl)
 	}
 

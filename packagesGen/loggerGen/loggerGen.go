@@ -37,11 +37,11 @@ func (ldg *LoggerDataGenerator) GenerateFiles() {
 
 func NewLoggerDataGenerator(dirsNames, filesNames []string) packagesgen.CommonGenFactory {
 	if dirsNames == nil {
-		dirsNames = make([]string, 0, len(loggerDirsNamesDefault))
+		dirsNames = make([]string, len(loggerDirsNamesDefault))
 		copy(dirsNames, loggerDirsNamesDefault)
 	}
 	if filesNames == nil {
-		filesNames = make([]string, 0, len(loggerFilesNamesDefault))
+		filesNames = make([]string, len(loggerFilesNamesDefault))
 		copy(filesNames, loggerFilesNamesDefault)
 	}
 

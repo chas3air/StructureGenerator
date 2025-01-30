@@ -3,6 +3,7 @@ package generator
 import (
 	"fmt"
 	"log"
+	"os"
 
 	packagesgen "github.com/chas3air/StructureGenerator/packagesGen"
 	basementgen "github.com/chas3air/StructureGenerator/packagesGen/basementGen"
@@ -34,7 +35,7 @@ func WorkPart() {
 			},
 		),
 	); err != nil {
-		log.Panicln(err)
+		log.Println("Error filling basement stack of dirs")
 	}
 
 	fmt.Println("At this point you need to choose whether you need modules or not")
@@ -43,13 +44,38 @@ func WorkPart() {
 		genFactory = configgen.NewConfigDataGenerator(nil, nil)
 		genFactory.GenerateDirectory()
 		genFactory.GenerateFiles()
+
+		if err := dirFiller.Fill(
+			dirfiller.CreateMapFromDestAndSource(
+				genFactory.GetFilesNames(),
+				[]string{
+					source.SourceConfig,
+				},
+			),
+		); err != nil {
+			log.Println("Error filling config stack of dirs")
+		}
 	}
 
 	if isNeed, err := packagesgen.GenPackageByName(nameOfLoggerPackage); isNeed && err == nil {
 		genFactory = loggergen.NewLoggerDataGenerator(nil, nil)
 		genFactory.GenerateDirectory()
 		genFactory.GenerateFiles()
+
+		if err := dirFiller.Fill(
+			dirfiller.CreateMapFromDestAndSource(
+				genFactory.GetFilesNames(),
+				[]string{
+					source.SourceLibLoggerHandlerSlogpretty,
+					source.SourceLibLoggerSl,
+				},
+			),
+		); err != nil {
+			log.Println("Error filling logger` stack of dirs")
+		}
 	}
+
+	os.Remove("main.go")
 
 	log.Println("Full directory structure was generated")
 }

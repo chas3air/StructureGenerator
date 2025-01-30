@@ -1,21 +1,20 @@
 package source
 
-var SourceAppMain = `
-package main
+var SourceAppMain = `package main
+
+import "TEMP/internal/app"
 
 func main() {
 	app.Run()
 }
 `
 
-var SourceConfig = `
-env: "local"
+var SourceConfig = `env: "local"
 port: 8080
 timeout: 1h
 `
 
-var SourceInternalApp = `
-package app
+var SourceInternalApp = `package app
 
 import (
 	"net/http"
@@ -27,8 +26,7 @@ func Run() {
 }
 `
 
-var SourceInternalConfig = `
-package config
+var SourceInternalConfig = `package config
 
 import (
 	"flag"
@@ -39,9 +37,9 @@ import (
 )
 
 type Config struct {
-	Env     string        ` + `yaml:"env" env-default:"local"` + `
-	Port    int           ` + `yaml:"port"` + `
-	Timeout time.Duration ` + `yaml:"timeout"` + `
+	Env     string        ` + "`yaml:\"env\" env-default:\"local\"`" + `
+	Port    int           ` + "`yaml:\"port\"`" + `
+	Timeout time.Duration ` + "`yaml:\"timeout\"`" + `
 }
 
 func MustLoad() *Config {
@@ -84,8 +82,7 @@ func validateConfigFile(path string) error {
 }
 `
 
-var SourceLibLoggerHandlerSlogpretty = `
-package slogpretty
+var SourceLibLoggerHandlerSlogpretty = `package slogpretty
 
 import (
 	"context"
@@ -185,8 +182,7 @@ func (h *PrettyHandler) WithGroup(name string) slog.Handler {
 }
 `
 
-var SourceLibLoggerSl = `
-package sl
+var SourceLibLoggerSl = `package sl
 
 import (
 	"log/slog"

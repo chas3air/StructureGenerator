@@ -15,16 +15,14 @@ func (df *DirFiller) Fill(fileSources map[string]string) error {
 	for dest, source := range fileSources {
 		file, err := os.OpenFile(dest, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
 		if err != nil {
-			//log.Printf("Error opening file %s: %v", dest, err)
-			log.Panicln(err)
+			log.Printf("Error opening file %s: %v", dest, err)
 			continue
 		}
 
 		defer file.Close()
 
 		if _, err := file.WriteString(source); err != nil {
-			//log.Printf("Error writing to file %s: %v", dest, err)
-			log.Panicln(err)
+			log.Printf("Error writing to file %s: %v", dest, err)
 		}
 	}
 

@@ -9,7 +9,7 @@ var loggerDirsNamesDefault = []string{
 	"internal/lib/",
 	"internal/lib/logger/",
 	"internal/lib/logger/handler/",
-	"internal/lib/logger/handler/slogdiscard/",
+	"internal/lib/logger/handler/slogpretty/",
 	"internal/lib/logger/sl/",
 }
 

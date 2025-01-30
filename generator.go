@@ -34,7 +34,7 @@ func WorkPart() {
 			},
 		),
 	); err != nil {
-		log.Panicln(err)
+		log.Println("Error filling basement stack of dirs")
 	}
 
 	fmt.Println("At this point you need to choose whether you need modules or not")
@@ -43,12 +43,35 @@ func WorkPart() {
 		genFactory = configgen.NewConfigDataGenerator(nil, nil)
 		genFactory.GenerateDirectory()
 		genFactory.GenerateFiles()
+
+		if err := dirFiller.Fill(
+			dirfiller.CreateMapFromDestAndSource(
+				genFactory.GetFilesNames(),
+				[]string{
+					source.SourceInternalConfig,
+				},
+			),
+		); err != nil {
+			log.Println("Error filling config stack of dirs")
+		}
 	}
 
 	if isNeed, err := packagesgen.GenPackageByName(nameOfLoggerPackage); isNeed && err == nil {
 		genFactory = loggergen.NewLoggerDataGenerator(nil, nil)
 		genFactory.GenerateDirectory()
 		genFactory.GenerateFiles()
+
+		if err := dirFiller.Fill(
+			dirfiller.CreateMapFromDestAndSource(
+				genFactory.GetFilesNames(),
+				[]string{
+					source.SourceLibLoggerHandlerSlogpretty,
+					source.SourceLibLoggerSl,
+				},
+			),
+		); err != nil {
+			log.Println("Error filling logger` stack of dirs")
+		}
 	}
 
 	log.Println("Full directory structure was generated")

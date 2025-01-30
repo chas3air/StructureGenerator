@@ -1,21 +1,18 @@
 package source
 
-var SourceAppMain = `
-package main
+var SourceAppMain = `package main
 
 func main() {
 	app.Run()
 }
 `
 
-var SourceConfig = `
-env: "local"
+var SourceConfig = `env: "local"
 port: 8080
 timeout: 1h
 `
 
-var SourceInternalApp = `
-package app
+var SourceInternalApp = `package app
 
 import (
 	"net/http"
@@ -27,8 +24,7 @@ func Run() {
 }
 `
 
-var SourceInternalConfig = `
-package config
+var SourceInternalConfig = `package config
 
 import (
 	"flag"
@@ -84,8 +80,7 @@ func validateConfigFile(path string) error {
 }
 `
 
-var SourceLibLoggerHandlerSlogpretty = `
-package slogpretty
+var SourceLibLoggerHandlerSlogpretty = `package slogpretty
 
 import (
 	"context"
@@ -185,8 +180,7 @@ func (h *PrettyHandler) WithGroup(name string) slog.Handler {
 }
 `
 
-var SourceLibLoggerSl = `
-package sl
+var SourceLibLoggerSl = `package sl
 
 import (
 	"log/slog"
